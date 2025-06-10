@@ -4,38 +4,89 @@ const brandCheckboxes = document.querySelectorAll(
 
 console.log("Got it");
 
+
 brandCheckboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", function () {
     filterMobilesByBrand();
     updateHeadingText();
     handleSeeMoreText();
     checkNoResults();
+    toggleClearButton(); 
   });
 });
 
+const minInput = document.getElementById("min-price");
+const maxInput = document.getElementById("max-price");
+const minLabel = document.getElementById("price-min-label");
+const maxLabel = document.getElementById("price-max-label");
+const track = document.querySelector(".slider-track");
+
+const priceMap = (value) => (value + 20) * 50;
+
+function updateRange() {
+  const min = Math.min(+minInput.value, +maxInput.value - 1);
+  const max = Math.max(+maxInput.value, +minInput.value + 1);
+  minInput.value = min;
+  maxInput.value = max;
+
+  const minPrice = priceMap(min);
+  const maxPrice = priceMap(max);
+
+  minLabel.textContent = `₹${minPrice}`;
+  maxLabel.textContent = `₹${maxPrice}${max >= 38 ? "+" : ""}`;
+
+  const percentMin = (min / 38) * 100;
+  const percentMax = (max / 38) * 100;
+
+  track.style.background = `
+    linear-gradient(to right, 
+      #bbbfbf 0%, 
+      #bbbfbf ${percentMin}%, 
+      #007185 ${percentMin}%, 
+      #007185 ${percentMax}%, 
+      #bbbfbf ${percentMax}%, 
+      #bbbfbf 100%)`;
+
+  filterMobilesByBrand();
+  checkNoResults();
+  toggleClearButton();
+}
+
+minInput.addEventListener("input", updateRange);
+maxInput.addEventListener("input", updateRange);
+
+updateRange();
+
 function filterMobilesByBrand() {
+  const filterDiv = document.querySelector('.price-filter-div');
+  filterDiv.style.display = 'block';
+
   const selectedBrands = Array.from(
     document.querySelectorAll('input[type="checkbox"][name="brand"]:checked')
   ).map((checkbox) => checkbox.value);
 
   const mobileItems = document.querySelectorAll(".mobile-list-div li");
-
-  if (selectedBrands.length === 0) {
-    mobileItems.forEach((item) => {
-      item.style.display = "block";
-    });
-    return;
-  }
+  const minPrice = priceMap(+minInput.value);
+  const maxPrice = priceMap(+maxInput.value);
 
   mobileItems.forEach((item) => {
     const itemBrand = item.getAttribute("data-brand");
-    if (selectedBrands.includes(itemBrand)) {
-      item.style.display = "block";
-    } else {
-      item.style.display = "none";
+    const itemPriceAttr = item.getAttribute("data-price");
+
+    const brandMatch =
+      selectedBrands.length === 0 || selectedBrands.includes(itemBrand);
+
+
+    let priceMatch = true;
+    if (itemPriceAttr !== null) {
+      const itemPrice = parseInt(itemPriceAttr);
+      priceMatch = itemPrice >= minPrice && itemPrice <= maxPrice;
     }
+
+    item.style.display = brandMatch && priceMatch ? "block" : "none";
   });
 }
+
 
 function updateHeadingText() {
   const selectedBrands = Array.from(
@@ -48,9 +99,9 @@ function updateHeadingText() {
     headings.forEach((heading, index) => {
       heading.style.display = "block";
       if (index === 0) {
-        heading.textContent = "All Mobiles";
+        heading.textContent = "Results";
       } else {
-        heading.textContent = "More Mobiles";
+        heading.textContent = "";
       }
     });
   } else {
@@ -98,8 +149,40 @@ function checkNoResults() {
   }
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
   updateHeadingText();
   handleSeeMoreText();
   checkNoResults();
+  toggleClearButton(); 
 });
+
+
+const clearButton = document.querySelector(".clear-filters-button");
+
+clearButton.addEventListener("click", () => {
+
+  document.querySelectorAll('input[type="checkbox"][name="brand"]').forEach((cb) => {
+    cb.checked = false;
+  });
+
+  minInput.value = 0;
+  maxInput.value = 38;
+  updateRange();
+
+  filterMobilesByBrand();
+  updateHeadingText();
+  handleSeeMoreText();
+  checkNoResults();
+  toggleClearButton();
+});
+
+function toggleClearButton() {
+  const anyBrandChecked = [...document.querySelectorAll('input[name="brand"]')].some(cb => cb.checked);
+  const rangeNotDefault = minInput.value != 0 || maxInput.value != 38;
+
+  const btnContainer = document.querySelector(".clear-filters-container");
+  if (btnContainer) {
+    btnContainer.style.display = anyBrandChecked || rangeNotDefault ? "block" : "none";
+  }
+}

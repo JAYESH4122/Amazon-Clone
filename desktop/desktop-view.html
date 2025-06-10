@@ -271,6 +271,13 @@
             </div>
             <ul>
               <li>
+                <div class="clear-filters-container" style="display: none">
+                  <button class="clear-filters-button">
+                    Clear All Filters
+                  </button>
+                </div>
+              </li>
+              <li>
                 <span>
                   <input
                     type="checkbox"
@@ -338,6 +345,40 @@
               </li> -->
             </ul>
           </div>
+          <div class="price-filter-div">
+            <p>Price</p>
+            <div class="filter-swipe-div">
+              <div class="filter-price-div">
+                <label><span id="price-min-label">₹1,000</span></label>
+                <span>–</span>
+                <label><span id="price-max-label">₹2,900+</span></label>
+              </div>
+              <div class="filter-slider-div">
+                <div class="slider-container">
+                  <div class="slider-track"></div>
+                  <input
+                    type="range"
+                    id="min-price"
+                    min="0"
+                    max="38"
+                    value="0"
+                    step="1"
+                    class="range-thumb"
+                  />
+                  <input
+                    type="range"
+                    id="max-price"
+                    min="0"
+                    max="38"
+                    value="38"
+                    step="1"
+                    class="range-thumb"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="section-d">
             <p>Customer Reviews</p>
             <div class="rating-details">
@@ -505,7 +546,6 @@
             <ul>
               <li><input type="checkbox" class="big-checkbox" /> Top Brands</li>
             </ul>
-            -1px
           </div>
           <div class="section-common">
             <p>Operating Sytem</p>
@@ -582,7 +622,7 @@
             </div>
             <div class="mobile-list-div">
               <ul>
-                <li data-brand="nokia">
+                <li data-brand="nokia" data-price="2199">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -618,7 +658,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-brand="nokia">
+                <li data-brand="nokia" data-price="1400">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -654,7 +694,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-brand="nokia">
+                <li data-brand="nokia" data-price="2300">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -690,7 +730,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-brand="nokia">
+                <li data-brand="nokia" data-price="2203">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -727,7 +767,7 @@
                   </div>
                 </li>
 
-                <li data-brand="nothing">
+                <li data-brand="nothing" data-price="2199">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -765,7 +805,44 @@
                   </div>
                 </li>
 
-                <li data-brand="nothing">
+                <li data-brand="nothing" data-price="1199">
+                  <div class="whole-mob-div">
+                    <div class="list-div">
+                      <div class="bg-div"></div>
+                      <img
+                        alt="Nothing Phone (3A) 5G (Black, 8GB RAM, 128GB Storage) | Snapdragon 7s Gen 3 | 50MP+50MP+8MP Cameras | 32MP Front | 6.77” 120Hz AMOLED | 5000mAh Battery | 50W Fast Charging | Up to 16GB RAM Expansion"
+                        src="https://m.media-amazon.com/images/I/51DUGLG+VoL._AC._SR360,460.jpg"
+                        class="octopus-pc-item-image octopus-pc-item-image-v3"
+                        data-a-hires="https://m.media-amazon.com/images/I/51DUGLG+VoL._AC._SR360,460.jpg"
+                        data-a-manual-replacement="true"
+                      />
+                    </div>
+                    <div class="mobile-info">
+                      <div class="mobile-price-info">
+                        <div class="mobile-price">
+                          <p><span>₹</span>3,599<span>00</span></p>
+                        </div>
+                        <div class="mobile-price-off">
+                          <span>₹2,199.00</span>
+                        </div>
+                      </div>
+                      <div class="mobile-details">
+                        <div class="mobile-name">
+                          <span>
+                            Nokia 130 Music | Built- <br />
+                            In Powerful Loud..
+                          </span>
+                        </div>
+                        <div class="mobile-rating">
+                          <span></span>
+                          <p>5,282</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li data-brand="nothing" data-price="1499">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -838,44 +915,7 @@
                     </div>
                   </div>
                 </li>
-
-                <li data-brand="nothing">
-                  <div class="whole-mob-div">
-                    <div class="list-div">
-                      <div class="bg-div"></div>
-                      <img
-                        alt="Nothing Phone (3A) 5G (Black, 8GB RAM, 128GB Storage) | Snapdragon 7s Gen 3 | 50MP+50MP+8MP Cameras | 32MP Front | 6.77” 120Hz AMOLED | 5000mAh Battery | 50W Fast Charging | Up to 16GB RAM Expansion"
-                        src="https://m.media-amazon.com/images/I/51DUGLG+VoL._AC._SR360,460.jpg"
-                        class="octopus-pc-item-image octopus-pc-item-image-v3"
-                        data-a-hires="https://m.media-amazon.com/images/I/51DUGLG+VoL._AC._SR360,460.jpg"
-                        data-a-manual-replacement="true"
-                      />
-                    </div>
-                    <div class="mobile-info">
-                      <div class="mobile-price-info">
-                        <div class="mobile-price">
-                          <p><span>₹</span>3,599<span>00</span></p>
-                        </div>
-                        <div class="mobile-price-off">
-                          <span>₹2,199.00</span>
-                        </div>
-                      </div>
-                      <div class="mobile-details">
-                        <div class="mobile-name">
-                          <span>
-                            Nokia 130 Music | Built- <br />
-                            In Powerful Loud..
-                          </span>
-                        </div>
-                        <div class="mobile-rating">
-                          <span></span>
-                          <p>5,282</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li data-brand="jio">
+                <li data-brand="jio" data-price="2389">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -911,7 +951,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-brand="cmf">
+                <li data-brand="cmf" data-price="1599">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -947,7 +987,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-brand="hmd">
+                <li data-brand="hmd" data-price="2399">
                   <div class="whole-mob-div">
                     <div class="list-div">
                       <div class="bg-div"></div>
@@ -993,7 +1033,7 @@
               </div>
               <div class="mobile-list-div">
                 <ul>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2299">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1029,7 +1069,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="jio">
+                  <li data-brand="jio" data-price="2234">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1065,7 +1105,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1101,7 +1141,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2139">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1137,7 +1177,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="lava">
+                  <li data-brand="lava" data-price="2139">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1173,7 +1213,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2329">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1209,7 +1249,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2349">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1245,7 +1285,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2239">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1281,7 +1321,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1317,7 +1357,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1353,7 +1393,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1299">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1400,7 +1440,7 @@
               </div>
               <div class="mobile-list-div">
                 <ul>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2499">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1436,7 +1476,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="itel">
+                  <li data-brand="itel" data-price="2699">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1472,7 +1512,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2329">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1508,7 +1548,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1263">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1544,7 +1584,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1328">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1580,7 +1620,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2299">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1616,7 +1656,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1652,7 +1692,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2499">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1688,7 +1728,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1349">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1724,7 +1764,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1349">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -1760,7 +1800,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="lava">
+                  <li data-brand="lava" data-price="2199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2269,7 +2309,7 @@
               </div>
               <div class="mobile-list-div">
                 <ul class="most-wished-for">
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1299">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2305,7 +2345,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2399">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2341,7 +2381,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2377,7 +2417,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2399">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2413,7 +2453,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2319">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2460,7 +2500,7 @@
               </div>
               <div class="mobile-list-div">
                 <ul>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2496,7 +2536,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2322">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2533,7 +2573,7 @@
                     </div>
                   </li>
 
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2569,7 +2609,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="1299">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2605,7 +2645,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2399">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2641,7 +2681,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2699">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2677,7 +2717,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="2999">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
@@ -2713,7 +2753,7 @@
                       </div>
                     </div>
                   </li>
-                  <li data-brand="nokia">
+                  <li data-brand="nokia" data-price="4199">
                     <div class="whole-mob-div">
                       <div class="list-div">
                         <div class="bg-div"></div>
