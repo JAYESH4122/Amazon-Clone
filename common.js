@@ -27,6 +27,11 @@ function loadMobileVersion() {
       link.rel = "stylesheet";
       link.href = "mobile/mobile-style.css";
       document.head.appendChild(link);
+
+            const script = document.createElement("script");
+      script.src = "mobile/mobile.js";
+      script.defer = true;
+      document.body.appendChild(script);
     });
 }
 

@@ -365,6 +365,7 @@ header {
   padding-left: 16px;
   padding-right: 6px;
   border-bottom: 3px solid #f4f4f4;
+  background-color: white;
 }
 .body-header-in .header-inner {
   display: flex;
@@ -778,4 +779,82 @@ header {
   background-color: transparent;
   border: 0;
   outline: 0;
+}
+.filter-section {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px 16px;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: bottom 0.3s ease-out;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.filter-section.show {
+  bottom: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.close-filter {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #0066c0;
+  cursor: pointer;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.filter-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.reset-btn {
+  background: none;
+  border: 1px solid #ddd;
+}
+
+.apply-btn {
+  background-color: #ffa41c;
+  border: 1px solid #ffa41c;
+  color: #0f1111;
 }
