@@ -20,8 +20,6 @@ function initializeMobileLists() {
     ul.style.display = 'grid';
     ul.style.gridAutoFlow = 'column';
     ul.style.gridTemplateColumns = 'repeat(auto-fit, minmax(197px, 1fr))';
-    ul.style.overflowX = 'auto';
-    ul.style.overflowY = 'hidden';
     ul.style.scrollSnapType = 'x mandatory';
     ul.style.gap = '0';
     ul.style.padding = '0';
