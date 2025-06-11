@@ -630,8 +630,6 @@
  .nav-fill-in ul .car {
      margin-left: 4px;
 }
- .nav-fill-in ul .computer {
-}
  .nav-section-3 {
      display: flex;
      justify-content: space-between;
@@ -1802,21 +1800,37 @@
     }
      .mobile-list-div ul {
          grid-auto-flow: column;
-         grid-template-columns: repeat(auto-fill, minmax(208px, 1fr));
+         grid-template-columns: repeat(auto-fill, minmax(209px, 1fr));
     }
      .mobile-list-div li, .filtered-grid li {
-         width: 206px !important;
+         width: 207px !important;
     }
 }
  @media (min-width: 1440px) {
      .mobile-list-div li, .filtered-grid li {
          width: 195px;
     }
+     .mobile-list-div ul {
+     grid-auto-columns: minmax(199px, 1fr);}
 }
  @media (max-width: 1440px) {
      .mobile-list-div li, .filtered-grid li {
-         width: 195px;
+         width: 197px;
     }
+}
+@media (max-width: 1024px){
+    .nav-left .nav-logo {
+    margin-left: 1px;
+    }
+    .cart .cart-text{
+        display: none;
+    }
+    .nav-left .location-details {
+    
+    margin-left: 0px !important;
+    }
+    .location-details a .location {
+    margin-left: 4px;}
 }
  .price-filter-div {
      margin-bottom: 12px !important;
