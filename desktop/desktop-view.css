@@ -852,39 +852,86 @@ header {
   height: 21px;
   width: 24px;}
 .right-container {
-  padding-left: 12px;}
-.right-container .mobile-section-main {
+  padding-left: 12px;
+}
+
+.mobile-section-main {
   margin-top: 40px;
-  margin-bottom: 40px;}
-.mobile-section-main .header-text .heading {
+  margin-bottom: 40px;
+}
+
+.header-text .heading {
   font-size: 28px;
   font-weight: 700;
   line-height: 40px;
-  margin-top: 2px;}
+  margin-top: 2px;
+}
+
 .header-text .see-more {
   color: #2162a1;
   font-size: 16px;
   line-height: 24px;
-  margin-left: 14px;}
+  margin-left: 14px;
+}
+
+
 .mobile-list-div {
-  margin-top: 8px;}
+  margin-top: 8px;
+  width: 100%;
+}
+
 .mobile-list-div ul {
   display: grid;
-grid-auto-flow: column;
+  grid-auto-flow: column;
   grid-auto-columns: minmax(197px, 1fr);
-  gap: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  gap: 0;
+  padding: 0;
+  margin: 0;
   list-style-type: none;
-  overflow-x: hidden;}
-.mobile-list-div ul li {
-  max-width: 297px;}
-.mobile-list-div .list-div {
+  width: 100%;
+}
+
+
+.filtered-container {
+  width: 100%;
+}
+
+.filtered-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(197px, 1fr));
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  width: 100%;
+}
+
+
+.mobile-list-div li,
+.filtered-grid li {
+  width: 197px;
+  scroll-snap-align: start;
+}
+
+.whole-mob-div {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.list-div {
   position: relative;
   height: 250px;
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;}
-.mobile-list-div .bg-div {
+  justify-content: center;
+  width: 100%;
+}
+
+.bg-div {
   height: 100%;
   z-index: 1;
   position: absolute;
@@ -895,49 +942,79 @@ grid-auto-flow: column;
     rgba(0, 0, 0, 0.01),
     rgba(0, 0, 0, 0.05),
     rgba(0, 0, 0, 0.05)
-  );}
-.mobile-list-div .list-div img {
-  margin: 10px 10px;
-  width: 180px;
-  height: 230px;}
-.mobile-list-div .mobile-info {
-  background-color: #fafafa;
-  padding-top: 9px;
-  padding-bottom: 2px !important;}
-.mobile-info .mobile-price-info {
-  height: 48px;
-  width: 100%;
-  padding: 0 20px 0 20px;
-  text-align: left;}
-.mobile-info .mobile-price p {
-  font-size: 21px;
-  height: 28px;
-  line-height: 28px;
-  color: #111;}
-.mobile-price {
-  margin-bottom: -1px;}
+  );
+}
 .mobile-info .mobile-price-info .mobile-price p :nth-child(1) {
   position: relative;
   top: -0.5em;
   font-size: 12px;
-  line-height: normal;}
+  line-height: normal;
+}
+
 .mobile-info .mobile-price-info .mobile-price p :nth-child(2) {
   font-size: 12px;
   line-height: normal;
   position: relative;
-  top: -0.5em;}
-.mobile-info .mobile-price-info .mobile-price-off {
-  margin-right: 6px;
-  overflow: visible;
-  margin-top: 2px;}
-.mobile-info .mobile-price-info .mobile-price-off span {
+  top: -0.5em;
+}
+
+.list-div img {
+  margin: 10px;
+  width: 180px;
+  height: 230px;
+  object-fit: contain;
+}
+
+.mobile-info {
+  background-color: #fafafa;
+  padding: 9px 20px 2px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mobile-price-info {
+  height: 48px;
+  width: 100%;
+  text-align: left;
+}
+
+.mobile-price p {
+  font-size: 21px;
+  height: 28px;
+  line-height: 28px;
+  color: #111;
+  margin: 0;
+}
+
+.mobile-price-off span {
   color: #565959;
   font-size: 12px;
   line-height: 16px;
-  text-decoration: line-through;}
+  text-decoration: line-through;
+}
+
 .mobile-details {
   height: 65px;
-  padding: 0 20px 0 20px;}
+  padding: 0;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #555;
+  width: 100%;
+}
+
+/* Hide scrollbar but keep functionality */
+.mobile-list-div ul::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-list-div ul {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 .mobile-details .mobile-name {
   margin-top: 9px;
   display: block;
@@ -1603,4 +1680,28 @@ padding: 0px 7.8px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
+}
+.filtered-mobile-list {
+  display: none;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(197px, 1fr));
+  gap: 2px;
+  list-style: none;
+  padding: 0;
+}
+.filtered-mobile-list li {
+  max-width: 297px;
+}
+.top-filter-heading {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.filtered-heading {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 40px;
+  margin: 0;
+  padding: 0;
 }
