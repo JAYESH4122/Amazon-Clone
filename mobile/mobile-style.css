@@ -640,10 +640,11 @@ header {
 .section-right .section-right-in {
   display: flex;
   flex-direction: column;
-  padding: 0 4px;
+  padding: 0 8px 0 4px;
   height: 100%;
 }
 .section-right-in .right-container {
+  position: relative;
   padding-right: 4px !important;
   margin-top: 0.8rem !important;
 }
@@ -777,14 +778,15 @@ header {
   font-weight: 700;
 }
 .button-div {
-  padding-top: 1.4rem;
+  position: absolute;
+  top: 254px;
   width: 100%;
-  margin-top: 52px;
 }
 .button-div-sp{
-    padding-top: 1.4rem;
+  position: absolute;
+  top: 284px;
   width: 100%;
-  margin-top: 31px;
+ 
 }
 
 .button-div, .button-div-sp .add-to-cart-btn {
