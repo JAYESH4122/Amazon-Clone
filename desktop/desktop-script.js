@@ -275,3 +275,4 @@ function toggleClearButton() {
     btnContainer.style.display = anyBrandChecked || rangeNotDefault ? "block" : "none";
   }
 }
+

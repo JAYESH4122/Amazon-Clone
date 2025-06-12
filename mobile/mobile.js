@@ -1,62 +1,72 @@
-        const filterButton = document.querySelector(".button-outter button");
-        const filterSection = document.querySelector(".filter-section");
-        const overlay = document.querySelector(".overlay");
-        const closeFilter = document.querySelector(".close-filter");
-        const applyBtn = document.querySelector(".apply-btn");
-        const resetBtn = document.querySelector(".reset-btn");
+const filterButton = document.querySelector(".button-outter button");
+const filterSection = document.querySelector(".filter-section");
+const overlay = document.querySelector(".overlay");
+const closeFilter = document.querySelector(".close-filter");
+const showResultsBtn = document.querySelector(".show-results-btn");
 
-        const brandCheckboxes = document.querySelectorAll(
-          ".brand-option input"
-        );
-        const productItems = document.querySelectorAll(".main-content-section");
+const brandTags = document.querySelectorAll(".brand-tag");
+const productItems = document.querySelectorAll(".main-content-section");
+const filterTitle = document.querySelector(".filter-title");
 
-        filterButton.addEventListener("click", function () {
-          filterSection.classList.add("show");
-          overlay.classList.add("show");
-          document.body.style.overflow = "hidden";
-        });
+let selectedBrands = new Set();
 
-        function closeFilterPanel() {
-          filterSection.classList.remove("show");
-          overlay.classList.remove("show");
-          document.body.style.overflow = "";
-        }
+filterButton.addEventListener("click", function () {
+  filterSection.classList.add("show");
+  overlay.classList.add("show");
+  document.body.style.overflow = "hidden";
+});
 
-        overlay.addEventListener("click", closeFilterPanel);
-        closeFilter.addEventListener("click", closeFilterPanel);
+function closeFilterPanel() {
+  filterSection.classList.remove("show");
+  overlay.classList.remove("show");
+  document.body.style.overflow = "";
+}
 
-        applyBtn.addEventListener("click", function () {
-          const selectedBrands = Array.from(brandCheckboxes)
-            .filter((cb) => cb.checked)
-            .map((cb) => cb.value);
+overlay.addEventListener("click", closeFilterPanel);
+closeFilter.addEventListener("click", closeFilterPanel);
 
-          productItems.forEach((item) => {
-            const itemBrand = item.getAttribute("data-brand");
-            if (
-              selectedBrands.length === 0 ||
-              selectedBrands.includes(itemBrand)
-            ) {
-              item.style.display = "block";
-            } else {
-              item.style.display = "none";
-            }
-          });
+function updateFilterCount() {
+  const count = selectedBrands.size;
+  filterTitle.textContent = `Filters (${count})`;
+  document.querySelector(".num-text").textContent = `(${count})`;
+}
 
-          const numText = document.querySelector(".num-text");
-          const checkedCount = Array.from(brandCheckboxes).filter(
-            (cb) => cb.checked
-          ).length;
-          numText.textContent = `(${checkedCount})`;
+function applyFilters() {
+  productItems.forEach((item) => {
+    const itemBrand = item.getAttribute("data-brand")?.toLowerCase();
+    if (selectedBrands.size === 0 || selectedBrands.has(itemBrand)) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+  showResultsBtn.textContent = `Show ${getVisibleProductCount()} results`;
+}
 
-          closeFilterPanel();
-        });
+function getVisibleProductCount() {
+  return document.querySelectorAll('.main-content-section[style="display: block;"], .main-content-section:not([style])').length;
+}
 
-        resetBtn.addEventListener("click", function () {
-          brandCheckboxes.forEach((checkbox) => {
-            checkbox.checked = false;
-          });
-        });
+brandTags.forEach(tag => {
+  tag.addEventListener("click", function() {
+    const brandName = this.textContent.trim().toLowerCase();
+    
 
-        const numText = document.querySelector(".num-text");
-        numText.textContent = `(${brandCheckboxes.length})`;
-        
+    if (this.classList.contains("selected")) {
+      selectedBrands.delete(brandName);
+      this.classList.remove("selected");
+    } else {
+      selectedBrands.add(brandName);
+      this.classList.add("selected");
+    }
+    
+    updateFilterCount();
+    
+    applyFilters();
+  });
+});
+
+showResultsBtn.addEventListener("click", closeFilterPanel);
+
+updateFilterCount();
+applyFilters();
