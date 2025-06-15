@@ -833,7 +833,7 @@ header {
   position: fixed;
   left: 0;
   top: 0;
-  width: 100;
+  width: 100%;
   height: 88%;
   background-color: #f0f2f2;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
@@ -845,6 +845,7 @@ header {
 }
 
 .filter-section.show {
+  color: #0f1111;
   transform: translateX(0);
   margin-top: 100px;
 }
@@ -866,13 +867,15 @@ header {
   font-size: 15px;
   font-weight: 700;
   color: #0f1111;
-  margin-left: 2px;
+margin-left: 2px;
+    margin-bottom: 2px;
 }
 
 .close-filter {
   background: none;
   border: none;
-  font-size: 28px;
+  font-weight: 400;
+  font-size: 29px;
   color: #0f1111;
   cursor: pointer;
   padding: 0;
@@ -892,7 +895,7 @@ header {
 }
 
 .category-item {
-  padding: 14px 16px 14px 8px;
+  padding: 16px 16px 16px 8px;
   font-size: 13px;
   line-height: 18.2px;
   color: #303333;
@@ -901,6 +904,9 @@ header {
   cursor: pointer;
   border-left: 4px solid transparent;
   border-right: #000;
+}
+.category-item span{
+  width: 76px;
 }
 
 .category-item.active {
@@ -945,6 +951,7 @@ header {
   border-radius: 8px;
   width: fit-content;
   margin-bottom: 8px;
+  font-weight: 400;
   margin-right: 2px;
   padding: 8px 12px;
   font-size: 12px;
@@ -962,9 +969,6 @@ header {
   border-color: #007185;
 }
 
-.brand-tag.top-brand {
-  font-weight: bold;
-}
 
 .filter-footer {
   padding: 20px;

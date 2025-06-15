@@ -1,278 +1,231 @@
-const brandCheckboxes = document.querySelectorAll(
-  'input[type="checkbox"][name="brand"]'
-);
+const brandCheckboxes = document.querySelectorAll('input[name="brand"]');
+const priceFilterDiv = document.querySelector(".price-filter-div");
+const minInput = document.getElementById("min-price");
+const maxInput = document.getElementById("max-price");
+const clearButton = document.querySelector(".clear-filters-button");
 
-let userHasInteracted = false;
 let originalMobileLists = [];
-
-
 function storeOriginalLists() {
-  originalMobileLists = Array.from(document.querySelectorAll('.mobile-list-div')).map(div => ({
+  const mobileListDivs = document.querySelectorAll(".mobile-list-div");
+  originalMobileLists = Array.from(mobileListDivs).map((div) => ({
     id: div.id,
     html: div.innerHTML,
-    heading: div.previousElementSibling?.querySelector('.heading')?.textContent || ''
+    heading:
+      div.previousElementSibling?.querySelector(".heading")?.textContent || "",
   }));
 }
 
-
-function initializeMobileLists() {
-  document.querySelectorAll('.mobile-list-div ul').forEach(ul => {
-    ul.style.display = 'grid';
-    ul.style.gridAutoFlow = 'column';
-    ul.style.gridTemplateColumns = 'repeat(auto-fit, minmax(197px, 1fr))';
-    ul.style.scrollSnapType = 'x mandatory';
-    ul.style.gap = '0';
-    ul.style.padding = '0';
-    ul.style.margin = '0';
+function setupMobileLists() {
+  document.querySelectorAll(".mobile-list-div ul").forEach((ul) => {
+    ul.style.display = "grid";
+    ul.style.gridAutoFlow = "column";
+    ul.style.gridTemplateColumns = "repeat(auto-fit, minmax(197px, 1fr))";
   });
 }
 
-brandCheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener("change", function () {
-    userHasInteracted = true;
-    filterMobilesByBrand();
-    updateHeadingText();
-    handleSeeMoreText();
-    checkNoResults();
-    toggleClearButton(); 
+function removeSeeMoreText() {
+  document.querySelectorAll(".see-more").forEach((el) => el.remove());
+}
+
+function handleBrandChange() {
+  const anyBrandChecked = Array.from(brandCheckboxes).some((cb) => cb.checked);
+  priceFilterDiv.style.display = anyBrandChecked ? "block" : "none";
+
+  if (!anyBrandChecked) {
+    location.reload();
+    return;
+  }
+
+  filterMobiles();
+  updateUI();
+  removeSeeMoreText();
+}
+
+function filterMobiles() {
+  const selectedBrands = Array.from(
+    document.querySelectorAll('input[name="brand"]:checked')
+  ).map((checkbox) => checkbox.value);
+
+  const minPrice = (+minInput.value + 20) * 50;
+  const maxPrice = (+maxInput.value + 20) * 50;
+
+  if (
+    selectedBrands.length === 0 &&
+    minInput.value == 0 &&
+    maxInput.value == 38
+  ) {
+    showOriginalLists();
+    return;
+  }
+
+  let filteredContainer = document.querySelector(".filtered-container");
+  if (!filteredContainer) {
+    filteredContainer = document.createElement("div");
+    filteredContainer.className = "filtered-container";
+    document
+      .querySelector(".right-container")
+      .insertBefore(
+        filteredContainer,
+        document.querySelector(".mobile-section-main")
+      );
+    document.querySelectorAll(".mobile-list-div").forEach((div) => {
+      div.style.display = "none";
+    });
+  } else {
+    filteredContainer.innerHTML = "";
+  }
+
+  const filteredGrid = document.createElement("ul");
+  filteredGrid.className = "filtered-grid";
+  filteredContainer.appendChild(filteredGrid);
+
+  let hasResults = false;
+  document.querySelectorAll(".mobile-list-div li").forEach((item) => {
+    const brand = item.getAttribute("data-brand");
+    const price = parseInt(item.getAttribute("data-price")) || 0;
+
+    const brandMatch =
+      selectedBrands.length === 0 || selectedBrands.includes(brand);
+    const priceMatch = price >= minPrice && price <= maxPrice;
+
+    if (brandMatch && priceMatch) {
+      filteredGrid.appendChild(item.cloneNode(true));
+      hasResults = true;
+    }
   });
-});
 
-const minInput = document.getElementById("min-price");
-const maxInput = document.getElementById("max-price");
-const minLabel = document.getElementById("price-min-label");
-const maxLabel = document.getElementById("price-max-label");
-const track = document.querySelector(".slider-track");
+  if (!hasResults) {
+    showNoItemsMessage(filteredContainer);
+  }
 
-const priceMap = (value) => (value + 20) * 50;
+  removeSeeMoreText();
+}
 
-function updateRange() {
+function showOriginalLists() {
+  const filteredContainer = document.querySelector(".filtered-container");
+  if (filteredContainer) filteredContainer.remove();
+
+  const filterHeading = document.querySelector(".top-filter-heading");
+  if (filterHeading) filterHeading.remove();
+
+  document.querySelectorAll(".mobile-list-div").forEach((div) => {
+    div.style.display = "block";
+    const original = originalMobileLists.find((list) => list.id === div.id);
+    if (original) div.innerHTML = original.html;
+  });
+
+  setupMobileLists();
+  removeSeeMoreText();
+}
+
+function showNoItemsMessage(container) {
+  const noItemsMsg = document.createElement("div");
+  noItemsMsg.className = "no-items-message";
+  noItemsMsg.innerHTML = `
+    <div style="text-align: center; padding: 40px;">
+      <p style="font-size: 18px; color: #555;">No items match your selection</p>
+    </div>
+  `;
+  container.appendChild(noItemsMsg);
+}
+
+function updatePriceRange() {
   const min = Math.min(+minInput.value, +maxInput.value - 1);
   const max = Math.max(+maxInput.value, +minInput.value + 1);
   minInput.value = min;
   maxInput.value = max;
 
-  const minPrice = priceMap(min);
-  const maxPrice = priceMap(max);
+  document.getElementById("price-min-label").textContent = `₹${
+    (min + 20) * 50
+  }`;
+  document.getElementById("price-max-label").textContent = `₹${
+    (max + 20) * 50
+  }${max >= 38 ? "+" : ""}`;
 
-  minLabel.textContent = `₹${minPrice}`;
-  maxLabel.textContent = `₹${maxPrice}${max >= 38 ? "+" : ""}`;
-
-  const percentMin = (min / 38) * 100;
-  const percentMax = (max / 38) * 100;
-
+  const track = document.querySelector(".slider-track");
+  const minPercent = (min / 38) * 100;
+  const maxPercent = (max / 38) * 100;
   track.style.background = `
-    linear-gradient(to right, 
-      #bbbfbf 0%, 
-      #bbbfbf ${percentMin}%, 
-      #007185 ${percentMin}%, 
-      #007185 ${percentMax}%, 
-      #bbbfbf ${percentMax}%, 
-      #bbbfbf 100%)`;
+    linear-gradient(to right,
+    #bbbfbf 0%, #bbbfbf ${minPercent}%,
+    #007185 ${minPercent}%, #007185 ${maxPercent}%,
+    #bbbfbf ${maxPercent}%, #bbbfbf 100%)`;
 
-  if (userHasInteracted) {
-    filterMobilesByBrand();
-    checkNoResults();
-    toggleClearButton();
-  }
+  filterMobiles();
+  updateUI();
 }
 
-minInput.addEventListener("input", () => {
-  userHasInteracted = true;
-  updateRange();
-});
+function updateUI() {
+  updateHeading();
+  toggleClearButton();
+}
 
-maxInput.addEventListener("input", () => {
-  userHasInteracted = true;
-  updateRange();
-});
-
-function filterMobilesByBrand() {
-  const filterDiv = document.querySelector('.price-filter-div');
-  filterDiv.style.display = 'block';
-
+function updateHeading() {
   const selectedBrands = Array.from(
-    document.querySelectorAll('input[type="checkbox"][name="brand"]:checked')
-  ).map((checkbox) => checkbox.value);
+    document.querySelectorAll('input[name="brand"]:checked')
+  ).map((cb) => cb.value);
 
-  const minPrice = priceMap(+minInput.value);
-  const maxPrice = priceMap(+maxInput.value);
-
-
-  if (selectedBrands.length === 0 && minInput.value == 0 && maxInput.value == 38) {
-    restoreOriginalLists();
-    return;
+  let heading = document.querySelector(".top-filter-heading");
+  if (!heading) {
+    heading = document.createElement("div");
+    heading.className = "top-filter-heading";
+    document.querySelector(".right-container").prepend(heading);
   }
 
-
-  let filteredContainer = document.querySelector('.filtered-container');
-  if (!filteredContainer) {
-    filteredContainer = document.createElement('div');
-    filteredContainer.className = 'filtered-container';
-    document.querySelector('.right-container').insertBefore(filteredContainer, document.querySelector('.mobile-section-main'));
-    
-
-    document.querySelectorAll('.mobile-list-div').forEach(div => {
-      div.style.display = 'none';
-    });
-  } else {
-    filteredContainer.innerHTML = '';
-  }
-
-
-  const filteredGrid = document.createElement('ul');
-  filteredGrid.className = 'filtered-grid';
-  filteredContainer.appendChild(filteredGrid);
-
-
-  let anyFiltered = false;
-  document.querySelectorAll('.mobile-list-div li').forEach(item => {
-    const itemBrand = item.getAttribute("data-brand");
-    const priceAttr = item.getAttribute("data-price");
-    const itemPrice = priceAttr ? parseInt(priceAttr) : null;
-
-    const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(itemBrand);
-    const priceMatch = itemPrice === null || (itemPrice >= minPrice && itemPrice <= maxPrice);
-
-    if (brandMatch && priceMatch) {
-      const clone = item.cloneNode(true);
-      filteredGrid.appendChild(clone);
-      anyFiltered = true;
-    }
-  });
-
-  if (!anyFiltered) {
-    const noResults = document.createElement('div');
-    noResults.className = 'no-results';
-    noResults.textContent = 'No results found';
-    filteredContainer.appendChild(noResults);
-  }
-}
-
-function restoreOriginalLists() {
-  const filteredContainer = document.querySelector('.filtered-container');
-  if (filteredContainer) {
-    filteredContainer.remove();
-  }
-
-
-  const topFilterHeading = document.querySelector('.top-filter-heading');
-  if (topFilterHeading) {
-    topFilterHeading.remove();
-  }
-
-  document.querySelectorAll('.mobile-list-div').forEach(div => {
-    div.style.display = 'block';
-    const original = originalMobileLists.find(list => list.id === div.id);
-    if (original) {
-      div.innerHTML = original.html;
-    }
-  });
-
-  initializeMobileLists();
-}
-
-function updateHeadingText() {
-  const selectedBrands = Array.from(
-    document.querySelectorAll('input[type="checkbox"][name="brand"]:checked')
-  ).map((checkbox) => checkbox.value);
-
-
-  let topFilterHeading = document.querySelector('.top-filter-heading');
-  if (!topFilterHeading) {
-    topFilterHeading = document.createElement('div');
-    topFilterHeading.className = 'top-filter-heading';
-    document.querySelector('.right-container').prepend(topFilterHeading);
-  }
-
-  if (selectedBrands.length === 0 && minInput.value == 0 && maxInput.value == 38) {
-
-    if (topFilterHeading) {
-      topFilterHeading.remove();
-    }
-
-    originalMobileLists.forEach((list, index) => {
+  if (
+    selectedBrands.length === 0 &&
+    minInput.value == 0 &&
+    maxInput.value == 38
+  ) {
+    if (heading) heading.remove();
+    originalMobileLists.forEach((list, i) => {
       const headings = document.querySelectorAll(".heading");
-      if (headings[index]) {
-        headings[index].style.display = "block";
-        headings[index].textContent = list.heading;
+      if (headings[i]) {
+        headings[i].style.display = "block";
+        headings[i].textContent = list.heading;
       }
     });
   } else {
-
-    const filterText = selectedBrands.length > 0 
-      ? `Filtered Mobiles (${selectedBrands.join(", ")})`
-      : "Filtered Mobiles";
-    topFilterHeading.innerHTML = `<h2 class="filtered-heading">${filterText}</h2>`;
-    
-
-    document.querySelectorAll(".heading").forEach(heading => {
-      heading.style.display = "none";
-    });
+    heading.innerHTML = `<h2>${
+      selectedBrands.length
+        ? `Results (${selectedBrands.join(", ")})`
+        : "No Results"
+    }</h2>`;
+    document
+      .querySelectorAll(".heading")
+      .forEach((h) => (h.style.display = "none"));
   }
 }
 
-function handleSeeMoreText() {
-  const seeMoreElements = document.querySelectorAll(".see-more");
-  seeMoreElements.forEach((element) => {
-    element.remove();
-  });
+function toggleClearButton() {
+  const anyBrandChecked = Array.from(brandCheckboxes).some((cb) => cb.checked);
+  const priceChanged = minInput.value != 0 || maxInput.value != 38;
+  document.querySelector(".clear-filters-container").style.display =
+    anyBrandChecked || priceChanged ? "block" : "none";
 }
 
-function checkNoResults() {
-  const visibleItems = document.querySelectorAll('.filtered-grid li, .mobile-list-div li[style*="display: block"], .mobile-list-div li:not([style])');
-  const noResultsElement = document.querySelector(".no-results");
-
-  if (visibleItems.length === 0) {
-    if (!noResultsElement) {
-      const noResults = document.createElement("div");
-      noResults.className = "no-results";
-      noResults.textContent = "No results found";
-      const container = document.querySelector('.filtered-container') || document.querySelector('.mobile-list-div');
-      container.appendChild(noResults);
-    }
-  } else if (noResultsElement) {
-    noResultsElement.remove();
-  }
+function clearFilters() {
+  brandCheckboxes.forEach((cb) => (cb.checked = false));
+  minInput.value = 0;
+  maxInput.value = 38;
+  updatePriceRange();
+  priceFilterDiv.style.display = "none";
+  location.reload();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   storeOriginalLists();
-  initializeMobileLists();
-  updateHeadingText();
-  handleSeeMoreText();
-  checkNoResults();
-  toggleClearButton();
-  updateRange();
+  setupMobileLists();
+  updateUI();
+  updatePriceRange();
+  priceFilterDiv.style.display = "none";
+  removeSeeMoreText();
 });
 
-const clearButton = document.querySelector(".clear-filters-button");
-
-clearButton.addEventListener("click", () => {
-  userHasInteracted = false;
-
-  document.querySelectorAll('input[type="checkbox"][name="brand"]').forEach((cb) => {
-    cb.checked = false;
-  });
-
-  minInput.value = 0;
-  maxInput.value = 38;
-
-  updateRange();
-  restoreOriginalLists();
-  updateHeadingText();
-  handleSeeMoreText();
-  checkNoResults();
-  toggleClearButton();
+brandCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", handleBrandChange);
 });
 
-function toggleClearButton() {
-  const anyBrandChecked = [...document.querySelectorAll('input[name="brand"]')].some(cb => cb.checked);
-  const rangeNotDefault = minInput.value != 0 || maxInput.value != 38;
-
-  const btnContainer = document.querySelector(".clear-filters-container");
-  if (btnContainer) {
-    btnContainer.style.display = anyBrandChecked || rangeNotDefault ? "block" : "none";
-  }
-}
-
+minInput.addEventListener("input", updatePriceRange);
+maxInput.addEventListener("input", updatePriceRange);
+clearButton.addEventListener("click", clearFilters);
